@@ -1,142 +1,88 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container, Form, Button, Card } from "react-bootstrap";
+
 
 const AddSong = () => {
-  const [song, setSong] = useState({ title: "", album: "", band: "" });
-  const navigate = useNavigate();
-
-  const handleAddSong = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("https://67cfa24e823da0212a82daef.mockapi.io/api/Songs", {
+    const [title, setTitle] = useState("");
+    const [album, setAlbum] = useState("");
+    const [band, setBand] = useState("");
+    const navigate = useNavigate();
+  
+    const handleAddSong = (e) => {
+      e.preventDefault();
+  
+      // Basic validation
+      if (title.length < 3 || album.length < 3 || band.length < 3) {
+        alert("All fields must have at least 3 characters.");
+        return;
+      }
+  
+      const newSong = { title, album, band };
+  
+      fetch("https://67cfa24e823da0212a82daef.mockapi.io/api/Songs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-       
-        body: JSON.stringify(song),
-      });
-
-      console.log(JSON.stringify(song));
-
-      if (!response.ok) {
-        throw new Error("Failed to add song");
-      }
-
-      navigate("/songs"); // Redirect back to song list
-    } catch (error) {
-      console.error("Error adding song:", error);
-    }
+        body: JSON.stringify(newSong),
+      })
+        .then((res) => res.json())
+        .then(() => {
+          navigate("/songs"); // Redirect to the song list after adding
+        })
+        .catch((error) => console.error("Error adding song:", error));
+    };
+  
+    return (
+      <Container className="d-flex justify-content-center mt-5">
+        <Card className="shadow-lg p-4" style={{ width: "40rem" }}>
+          <h2 className="text-center mb-4">Add a New Song</h2>
+          <Form onSubmit={handleAddSong}>
+            <Form.Group className="mb-3">
+              <Form.Label>Song Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter song title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+            </Form.Group>
+  
+            <Form.Group className="mb-3">
+              <Form.Label>Album Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter album name"
+                value={album}
+                onChange={(e) => setAlbum(e.target.value)}
+                required
+              />
+            </Form.Group>
+  
+            <Form.Group className="mb-3">
+              <Form.Label>Band Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter band name"
+                value={band}
+                onChange={(e) => setBand(e.target.value)}
+                required
+              />
+            </Form.Group>
+  
+            <div className="d-flex justify-content-between">
+              <Button variant="success" type="submit">
+                Add Song
+              </Button>
+              <Button variant="secondary" onClick={() => navigate("/songs")}>
+                Cancel
+              </Button>
+            </div>
+          </Form>
+        </Card>
+      </Container>
+    );
   };
-
-  return (
-    <form onSubmit={handleAddSong}>
-      <label>Title:</label>
-      <input
-        type="text"
-        value={song.title}
-        onChange={(e) => setSong({ ...song, title: e.target.value })}
-        required
-      />
-
-      <label>Album:</label>
-      <input
-        type="text"
-        value={song.album}
-        onChange={(e) => setSong({ ...song, album: e.target.value })}
-        required
-      />
-
-      <label>Band:</label>
-      <input
-        type="text"
-        value={song.band}
-        onChange={(e) => setSong({ ...song, band: e.target.value })}
-        required
-      />
-
-      <button type="submit">Add Song</button>
-    </form>
-  );
-};
-
-export default AddSong;
-
-
-
-
-
-
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { Button, Form } from "react-bootstrap";
-
-// const AddSong = ({ onAddSong }) => { // ✅ Receive onAddSong as a prop
-//   const navigate = useNavigate();
-//   const [song, setSong] = useState({ title: "", album: "", band: "" });
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     onAddSong(song); // ✅ Call function to update song list
-//     navigate("/songs"); // ✅ Redirect to song list
-//   };
-
-//   const handleAddSong = async (e) => {
-//     e.preventDefault();
-    
-//     try {
-//       const response = await fetch("https://your-mockapi-url.com/songs", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(song),
-//       });
   
-//       if (!response.ok) throw new Error("Failed to add song");
-  
-//       const newSong = await response.json();
-//       console.log("Added song:", newSong); // Debugging: Check if it's saved
-  
-//       navigate("/songs"); // Redirect after successful save
-//     } catch (error) {
-//       console.error("Error adding song:", error);
-//     }
-//   };
-  
-
-
-//   return (
-//     <Form onSubmit={handleSubmit}>
-//       <Form.Group>
-//         <Form.Label>Title</Form.Label>
-//         <Form.Control
-//           type="text"
-//           value={song.title}
-//           onChange={(e) => setSong({ ...song, title: e.target.value })}
-//           required
-//         />
-//       </Form.Group>
-//       <Form.Group>
-//         <Form.Label>Album</Form.Label>
-//         <Form.Control
-//           type="text"
-//           value={song.album}
-//           onChange={(e) => setSong({ ...song, album: e.target.value })}
-//           required
-//         />
-//       </Form.Group>
-//       <Form.Group>
-//         <Form.Label>Band</Form.Label>
-//         <Form.Control
-//           type="text"
-//           value={song.band}
-//           onChange={(e) => setSong({ ...song, band: e.target.value })}
-//           required
-//         />
-//       </Form.Group>
-//       <Button type="submit">Add Song</Button>
-//     </Form>
-//   );
-// };
-
-// export default AddSong;
-
+  export default AddSong;
