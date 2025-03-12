@@ -54,7 +54,7 @@ const Songs = () => {
             <Card className="shadow">
               <Card.Body>
                 <Card.Title>{song.title}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">{song.album}</Card.Subtitle>
+                <Card.Subtitle className="mb-2 text-muted">Album: {song.album}</Card.Subtitle>
                 <Card.Text>Band: {song.band}</Card.Text>
                 <Button variant="primary" as={Link} to={`/edit/${song.id}`} className="me-2">
                   Edit
