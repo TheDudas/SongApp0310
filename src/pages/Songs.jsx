@@ -33,7 +33,7 @@ const Songs = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this song?")) {
-      fetch(`https://67cfa24e823da0212a82daef.mockapi.io/api/songs/${id}`, {
+      fetch(`https://67cfa24e823da0212a82daef.mockapi.io/api/Songs/${id}`, {
         method: "DELETE",
       })
         .then(() => {
