@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Form, Button, Card } from "react-bootstrap";
 
+// Imports react router and bootstrap form, button, card and container controls. 
+
+// set const for AddSong and pass data through from useState. 
+// navigates back to addSong Songlist page. 
 
 const AddSong = () => {
     const [title, setTitle] = useState("");
@@ -20,7 +24,9 @@ const AddSong = () => {
       }
   
       const newSong = { title, album, band };
-  
+
+      // goes to mockapi and gets data, stores data entered with Post. 
+
       fetch("https://67cfa24e823da0212a82daef.mockapi.io/api/Songs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -32,7 +38,8 @@ const AddSong = () => {
         })
         .catch((error) => console.error("Error adding song:", error));
     };
-  
+  // uses container and forms to save data by ID. 
+
     return (
       <Container className="d-flex justify-content-center mt-5">
         <Card className="shadow-lg p-4" style={{ width: "40rem" }}>
@@ -84,5 +91,6 @@ const AddSong = () => {
       </Container>
     );
   };
+  // adds song or cancel edit
   
   export default AddSong;

@@ -15,5 +15,6 @@ const About = () => {
     </Container>
   );
 };
+// container for information About Us
 
 export default About;

@@ -9,11 +9,13 @@ import About from "./pages/About";
 import Navbar from "./components/Navbar";
 import { useState } from "react";
 
+// imports all React and page information to run the App
 
 const App = () => {
 
   const [songs, setSongs] = useState([]);
-
+//sets songs into useState. 
+//handles song requests for new songs and updating songs. 
   const handleAddSong = (newSong) => {
     setSongs([...songs, newSong]); // Add new song to state
   };
@@ -21,7 +23,7 @@ const App = () => {
   const handleUpdateSong = (updatedSong) => {
     setSongs(songs.map((song) => (song.id === updatedSong.id ? updatedSong : song)));
   };
-
+// returns via the react Router the Navbar and paths to the other pages of the website. 
   return (
     <Router>
       <Navbar />

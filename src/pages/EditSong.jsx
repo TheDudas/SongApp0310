@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
+// imports bootstrap and react components. 
 
+// edits song parameters. add title, album and band name to Song ID
 const EditSong = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const EditSong = () => {
       .catch((error) => console.error("Error fetching song:", error));
   }, [id]);
 
-  // Handle Update
+  // Handle song Updates
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(`https://67cfa24e823da0212a82daef.mockapi.io/api/Songs/${id}`, {
@@ -28,6 +30,8 @@ const EditSong = () => {
       .catch((error) => console.error("Error updating song:", error));
   };
 
+  // returns all data in a container with bootstrap elements configured. 
+  
   return (
     <div className="edit-container">
       <h2>Edit Song</h2>

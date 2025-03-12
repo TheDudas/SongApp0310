@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, Button, Container, Row, Col } from "react-bootstrap"; // Import Bootstrap components
 
+//imports bootstrap components and then runs functions for Songs. fetches from mockapi stores entries and retrieves as required.
+
 const Songs = () => {
   const [songs, setSongs] = useState([]);
 
@@ -9,10 +11,8 @@ const Songs = () => {
     fetch("https://67cfa24e823da0212a82daef.mockapi.io/api/Songs")
       .then((res) => res.json())
       .then((data) => {
-        // Filter out songs that contain only random letters or symbols
-        // const cleanedSongs = data.filter((song) =>
-        //   /^[A-Za-z0-9\s]+$/.test(song.title) && song.title.length > 2  // at least three valid characters
-        // );
+        // Filters out all data that contain random letters or symbols
+
         const cleanedSongs = data.filter((song) =>
             /^[A-Za-z0-9\s]+$/.test(song.title) &&
             /^[A-Za-z0-9\s]+$/.test(song.album) &&
@@ -27,6 +27,9 @@ const Songs = () => {
       })
       .catch((error) => console.error("Error fetching songs:", error));
   }, []);
+  //checks for errors and catches with message of where error is. 
+
+  // deletes song by ID
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this song?")) {
@@ -41,7 +44,7 @@ const Songs = () => {
     }
   };
 
-  
+// displays song data with container using card body for each ID and adds shadow effects through bootstrap. 
   return (
     <Container fluid className="mt-4">
       <h2 className="text-center mb-4">Song List</h2>
